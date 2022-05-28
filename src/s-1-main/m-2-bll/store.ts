@@ -16,7 +16,6 @@ const reducers = combineReducers({
     error404: error404Reducer,
     recoverPassword: recoverPasswordReducer,
     newPassword: newPasswordReducer
-
 });
 
 const store = createStore(reducers, applyMiddleware(thunkMiddleware));
