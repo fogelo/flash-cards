@@ -5,7 +5,7 @@ import {IAppStore} from "../../../../s-1-main/m-2-bll/store";
 import {IRegisterState} from "../r-2-bll/b-2-redux/registerInitialState";
 import {useNavigate} from "react-router-dom";
 import {setErrorRegister, setLoadingRegister, setSuccessRegister} from "../r-2-bll/b-2-redux/registerActions";
-import {PROFILE_PATH} from "../../../../s-1-main/m-1-ui/Routing";
+import {SIGN_IN_PATH} from "../../../../s-1-main/m-1-ui/Routing";
 
 interface IRegisterProps {
 
@@ -35,12 +35,12 @@ const Register: React.FC<IRegisterProps> = ({}) => {
             })
     }
 
-    //redirect to profile
-    /*
-        if (success) {
-                navigate(PROFILE_PATH)
-            }
-     */
+    //redirect to sign-in page
+
+    if (success) {
+        navigate(SIGN_IN_PATH)
+    }
+
     return (
         <div>
             <form name={"register"}>
