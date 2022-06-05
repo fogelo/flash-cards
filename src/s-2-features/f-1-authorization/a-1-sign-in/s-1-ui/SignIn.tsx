@@ -20,11 +20,13 @@ const SignIn: React.FC<ISignInProps> = ({}) => {
     const [password, setPassword] = useState("12345678")
     const [rememberMe, setRememberMe] = useState<boolean>(false)
 
+
     const buttonOnClickHandler = (e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
         SignInAPI.login(email, password, rememberMe)
             .then((res) => {
-                console.log(res)
+                console.log(res.data)
+
 
             })
             .catch((error) => {
@@ -39,12 +41,16 @@ const SignIn: React.FC<ISignInProps> = ({}) => {
                            name={"email"}
                            placeholder={"enter your email"}
                            value={email}
-                           onChange={(e) => setEmail(e.currentTarget.value)}/>
+                           variant="standard"
+                           onChange={(e) => setEmail(e.currentTarget.value)}
+                />
                 <TextField type="text"
                            name={"password"}
                            placeholder={"enter your password"}
                            value={password}
-                           onChange={(e) => setPassword(e.currentTarget.value)}/>
+                           variant="standard"
+                           onChange={(e) => setPassword(e.currentTarget.value)}
+                />
                 <FormControlLabel control={
                     <Checkbox name={"rememberMe"}
                               checked={rememberMe}
@@ -52,7 +58,7 @@ const SignIn: React.FC<ISignInProps> = ({}) => {
                                   setRememberMe(e.currentTarget.checked)
                               }}/>}
                                   label="remember me"
-                                  sx={{display: "block"}}
+                                  sx={{width: "200px"}}
 
                 />
                 <Button type={"submit"}
@@ -69,13 +75,28 @@ const SignIn: React.FC<ISignInProps> = ({}) => {
     );
 };
 
-const SignInStyled = styled.div`
+export const SignInStyled = styled.div`
   background-color: white;
-  max-width: 500px;
-  padding:  20px;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateY(-50%) translateX(-50%);
+  border-radius: 10px;
+
   form {
     display: flex;
+    justify-content: center;
     flex-direction: column;
+    min-width: 413px;
+    height: 600px;
+    gap: 40px;
+
+    input {
+      padding: 10px;
+    }
   }
 `
 

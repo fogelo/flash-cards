@@ -6,6 +6,9 @@ import {IRegisterState} from "../r-2-bll/b-2-redux/registerInitialState";
 import {useNavigate} from "react-router-dom";
 import {setErrorRegister, setLoadingRegister, setSuccessRegister} from "../r-2-bll/b-2-redux/registerActions";
 import {SIGN_IN_PATH} from "../../../../s-1-main/m-1-ui/Routing";
+import styled from "styled-components";
+import {SignInStyled} from "../../a-1-sign-in/s-1-ui/SignIn";
+import {Button, TextField} from "@mui/material";
 
 interface IRegisterProps {
 
@@ -42,27 +45,31 @@ const Register: React.FC<IRegisterProps> = ({}) => {
     }
 
     return (
-        <div>
+        <SignInStyled>
             <form name={"register"}>
-                <input type="text"
-                       name={"email"}
-                       placeholder={"enter your email"}
-                       onChange={(e) => setEmail(e.currentTarget.value)}/>
-                <input type="text"
-                       name={"password"}
-                       placeholder={"enter your password"}
-                       onChange={(e) => setPassword(e.currentTarget.value)}/>
-                <button type={"submit"}
+                <TextField type="text"
+                           name={"email"}
+                           placeholder={"enter your email"}
+                           variant="standard"
+                           onChange={(e) => setEmail(e.currentTarget.value)}/>
+                <TextField type="text"
+                           name={"password"}
+                           placeholder={"enter your password"}
+                           variant="standard"
+                           onChange={(e) => setPassword(e.currentTarget.value)}/>
+                <Button type={"submit"}
                         onClick={buttonOnClickHandler}
+                        variant={"contained"}
                 >
                     sign up
-                </button>
+                </Button>
                 {
                     loading ? <div>loading...</div> : error ? <div>{error}</div> : ""
                 }
             </form>
-        </div>
+        </SignInStyled>
     );
 };
+
 
 export default Register;

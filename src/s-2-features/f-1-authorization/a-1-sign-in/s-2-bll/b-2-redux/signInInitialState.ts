@@ -1,7 +1,7 @@
-export interface ISignInState { // blank
+export interface ISignInState {
 
 }
 
-export const signInInitialState: ISignInState = { // blank
-
+export const signInInitialState: ISignInState = {
+    isSignIn: false
 };
