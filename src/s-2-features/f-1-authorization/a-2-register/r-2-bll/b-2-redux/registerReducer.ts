@@ -1,5 +1,15 @@
-import {registerInitialState} from "./registerInitialState";
-import {IRegisterActions} from "./registerActions";
+export interface IRegisterState {
+    success: boolean
+    error: string
+    loading: boolean
+}
+
+export const registerInitialState: IRegisterState = {
+    success: false,
+    loading: false,
+    error: ""
+};
+
 
 export const registerReducer = (state = registerInitialState, action: IRegisterActions) => {
     switch (action.type) {
@@ -13,3 +23,13 @@ export const registerReducer = (state = registerInitialState, action: IRegisterA
             return state;
     }
 };
+
+export const setErrorRegister = (error: string) => ({type:  "REGISTER/ERROR", error} as const);
+export const setSuccessRegister = (isSuccess: boolean) => ({type: "REGISTER/SUCCESS", isSuccess} as const)
+export const setLoadingRegister = (isLoading: boolean) => ({type: "REGISTER/LOADING", isLoading} as const)
+
+// types
+export type IRegisterActions =
+    ReturnType<typeof setErrorRegister>
+    | ReturnType<typeof setSuccessRegister>
+    | ReturnType<typeof setLoadingRegister>

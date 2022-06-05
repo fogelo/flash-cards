@@ -1,15 +1,13 @@
-import React, {MouseEvent, useState} from "react";
-import {NavLink} from "react-router-dom";
-import {FORGOT_PATH, REGISTER_PATH} from "../../../../s-1-main/m-1-ui/Routing";
-import {
-    setErrorRegister,
-    setLoadingRegister,
-    setSuccessRegister
-} from "../../a-2-register/r-2-bll/b-2-redux/registerActions";
-import {RegisterAPI} from "../../a-2-register/r-3-dal/RegisterAPI";
+import React, {MouseEvent, useEffect, useState} from "react";
+import {useNavigate} from "react-router-dom";
+
 import {SignInAPI} from "../s-3-dal/SignInAPI";
 import styled from "styled-components";
 import {Button, Checkbox, FormControlLabel, TextField} from "@mui/material";
+import {useDispatch, useSelector} from "react-redux";
+import {IAppStore} from "../../../../s-1-main/m-2-bll/store";
+import {PROFILE_PATH} from "../../../../s-1-main/m-1-ui/Routing";
+import {setProfile} from "../../../f-3-profile/p-2-bll/b-2-redux/profileReducer";
 
 interface ISignInProps {
 
@@ -19,20 +17,30 @@ const SignIn: React.FC<ISignInProps> = ({}) => {
     const [email, setEmail] = useState("a@yandex.ru")
     const [password, setPassword] = useState("12345678")
     const [rememberMe, setRememberMe] = useState<boolean>(false)
+    const isLoggedIn = useSelector<IAppStore, boolean>(state => state.app.isLoggedIn)
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
 
 
     const buttonOnClickHandler = (e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
         SignInAPI.login(email, password, rememberMe)
             .then((res) => {
-                console.log(res.data)
-
-
+                dispatch(setProfile({
+                    email: res.data.email,
+                    name: res.data.name,
+                    avatar: res.data.avatar
+                }))
+                navigate(PROFILE_PATH)
             })
             .catch((error) => {
-
             })
     }
+    useEffect(() => {
+        if (isLoggedIn) {
+            navigate("/profile")
+        }
+    }, [])
 
     return (
         <SignInStyled>
