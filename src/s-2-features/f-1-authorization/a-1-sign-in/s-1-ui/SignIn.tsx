@@ -8,6 +8,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {IAppStore} from "../../../../s-1-main/m-2-bll/store";
 import {PROFILE_PATH} from "../../../../s-1-main/m-1-ui/Routing";
 import {setProfile} from "../../../f-3-profile/p-2-bll/b-2-redux/profileReducer";
+import {setIsLoggedIn} from "../../../../s-1-main/m-2-bll/appReducer";
 
 interface ISignInProps {
 
@@ -26,6 +27,7 @@ const SignIn: React.FC<ISignInProps> = ({}) => {
         e.preventDefault()
         SignInAPI.login(email, password, rememberMe)
             .then((res) => {
+                dispatch(setIsLoggedIn(true))
                 dispatch(setProfile({
                     email: res.data.email,
                     name: res.data.name,
