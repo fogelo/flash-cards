@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/flash-cards/static/css/main.347074a5.css",
+    "main.js": "/flash-cards/static/js/main.4353cf22.js",
+    "static/media/default-user.png": "/flash-cards/static/media/default-user.09dec60e9eabe9ecf129.png",
+    "index.html": "/flash-cards/index.html",
+    "main.347074a5.css.map": "/flash-cards/static/css/main.347074a5.css.map",
+    "main.4353cf22.js.map": "/flash-cards/static/js/main.4353cf22.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.347074a5.css",
+    "static/js/main.4353cf22.js"
+  ]
+}
