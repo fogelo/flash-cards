@@ -1,42 +1,25 @@
-export interface IForgotState { // blank
-
-}
-
-export const forgotInitialState: IForgotState = { // blank
-
+export const forgotInitialState: ForgotStateType = {
+    recoveryEmail: ""
 };
 
-export const forgotReducer = (state = forgotInitialState, action: IForgotActions) => {
+export type ForgotStateType = {
+    recoveryEmail: string
+}
+
+export const forgotReducer = (state = forgotInitialState, action: ForgotActionType) => {
     switch (action.type) {
-        case FORGOT: { // blank
-            return {
-                ...state,
-
-            }
-        }
-
-        default: {
+        case "forgot/set-recovery-email":
+            return {...state, recoveryEmail: action.recoveryEmail}
+        default:
             return state;
-        }
     }
 };
 
 
-export const FORGOT_LOADING = 'FORGOT/LOADING';
-export const FORGOT_ERROR = 'FORGOT/ERROR';
-export const FORGOT_SUCCESS = 'FORGOT/SUCCESS';
+export const setRecoveryEmail = (recoveryEmail: string) => ({
+    type: "forgot/set-recovery-email",
+    recoveryEmail
+} as const);
 
-export const FORGOT = 'FORGOT/SOME';
-
-interface IForgotSome { // blank
-    type: typeof FORGOT;
-
-}
-
-export type IForgotActions = IForgotSome;
-
-export const forgotSome = (): IForgotSome => ({ // blank
-    type: FORGOT,
-
-});
-
+//types
+export type ForgotActionType = ReturnType<typeof setRecoveryEmail>;

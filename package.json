@@ -1,5 +1,6 @@
 {
   "name": "flash-cards",
+  "homepage": "https://fogelo.github.io/flash-cards/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

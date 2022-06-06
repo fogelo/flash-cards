@@ -15,7 +15,7 @@ interface ISignInProps {
 }
 
 const SignIn: React.FC<ISignInProps> = ({}) => {
-    const [email, setEmail] = useState("a@yandex.ru")
+    const [email, setEmail] = useState("fogelo@yandex.ru")
     const [password, setPassword] = useState("12345678")
     const [rememberMe, setRememberMe] = useState<boolean>(false)
     const isLoggedIn = useSelector<IAppStore, boolean>(state => state.app.isLoggedIn)
