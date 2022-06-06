@@ -4,7 +4,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {IAppStore} from "../../../s-1-main/m-2-bll/store";
 import {ProfileInitStateType} from "../p-2-bll/b-2-redux/profileReducer";
 import defaultAvatar from "../../../assets/img/default-user.png"
-import {Avatar} from "@mui/material";
+import {Avatar, TextField} from "@mui/material";
 import {profileAPI} from "../p-3-dal/profileAPI";
 import {setIsLoggedIn} from "../../../s-1-main/m-2-bll/appReducer";
 import {useNavigate} from "react-router-dom";
@@ -18,9 +18,11 @@ const Profile: React.FC<IProfileProps> = () => {
     const profile = useSelector<IAppStore, ProfileInitStateType>(state => state.profile)
     const isLoggedIn = useSelector<IAppStore, boolean>(state => state.app.isLoggedIn)
     const [editMode, setEditMode] = useState(false)
-    const [avatar, setAvatar] = useState("")
-    const [name, setName] = useState("")
-    const [email, setEmail] = useState("")
+
+    const [avatar, setAvatar] = useState(profile.avatar)
+    const [name, setName] = useState(profile.name)
+    const [email, setEmail] = useState(profile.email)
+
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
@@ -29,6 +31,14 @@ const Profile: React.FC<IProfileProps> = () => {
             .then(res => {
                 dispatch(setIsLoggedIn(false))
                 navigate(SIGN_IN_PATH)
+            })
+    }
+
+    const editProfile = (name: string, avatar: string) => {
+        profileAPI.updateProfile(name, avatar)
+            .then(res => {
+                console.log(res)
+                setEditMode(!editMode)
             })
     }
 
@@ -46,14 +56,24 @@ const Profile: React.FC<IProfileProps> = () => {
                         <div>
                             <Avatar
                                 alt="Remy Sharp"
-                                src={profile.avatar ? profile.avatar : defaultAvatar}
+                                src={avatar ? avatar : defaultAvatar}
                                 sx={{width: 100, height: 100}}
                             />
                         </div>
-                        <input type="text" value={name} onChange={e => setName(e.currentTarget.value)}/>
-                        <input type="text" value={email} onChange={e => setEmail(e.currentTarget.value)}/>
+                        <TextField type="text"
+                                   value={name}
+                                   onChange={e => setName(e.currentTarget.value)}
+                                   variant={"standard"}
+                                   label={"enter your name"}
+                        />
+                        <TextField type="text"
+                                   value={avatar}
+                                   onChange={e => setAvatar(e.currentTarget.value)}
+                                   variant={"standard"}
+                                   label={"enter avatar url"}
+                        />
                         <div>
-                            <button onClick={() => setEditMode(!editMode)}>save</button>
+                            <button onClick={() => editProfile(name, avatar)}>save</button>
                             <button onClick={() => setEditMode(!editMode)}>cancel</button>
                         </div>
                     </div>
@@ -62,12 +82,12 @@ const Profile: React.FC<IProfileProps> = () => {
                         <div>
                             <Avatar
                                 alt="Remy Sharp"
-                                src={profile.avatar ? profile.avatar : defaultAvatar}
+                                src={avatar ? avatar : defaultAvatar}
                                 sx={{width: 100, height: 100}}
                             />
                         </div>
-                        <div>name: {profile.name}</div>
-                        <div>e-mail: {profile.email}</div>
+                        <div>name: {name}</div>
+                        <div>e-mail: {email}</div>
                         <button onClick={() => setEditMode(!editMode)}>edit profile</button>
                     </div>
                 }</div>
@@ -80,7 +100,6 @@ const ProfileStyled = styled.div`
     padding: 10px;
     background: #D9D9F1;
     width: 243px;
-    height: 216px;
 
     .left-content {
       display: flex;

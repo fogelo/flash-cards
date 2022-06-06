@@ -9,8 +9,8 @@ import {setProfile} from "./s-2-features/f-3-profile/p-2-bll/b-2-redux/profileRe
 
 const App: React.FC = () => {
     const isAppInitialized = useSelector<IAppStore, boolean>(state => state.app.isAppInitialized)
-    console.log(isAppInitialized)
     const dispatch = useDispatch()
+
     useEffect(() => {
         appAPI.me()
             .then((res) => {
@@ -19,6 +19,7 @@ const App: React.FC = () => {
                 dispatch(setProfile({
                     email: res.data.email,
                     name: res.data.name,
+                    avatar: res.data.avatar
                 }))
             })
             .catch(error => {

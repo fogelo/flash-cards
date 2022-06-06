@@ -1,8 +1,7 @@
 export const profileInitialState = {
-    email: null,
-    name: null,
-    avatar: null,
-    defaultAvatar: null
+    email: "",
+    name: "",
+    avatar: "",
 };
 
 export type ProfileInitStateType = typeof profileInitialState
@@ -21,6 +20,7 @@ export const setProfile = (payload: PayloadType) => ({
     type: "profile/set-profile",
     payload
 } as const);
+
 
 //types
 type PayloadType = {

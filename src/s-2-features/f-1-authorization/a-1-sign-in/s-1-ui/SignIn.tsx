@@ -6,7 +6,7 @@ import styled from "styled-components";
 import {Button, Checkbox, FormControlLabel, TextField} from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
 import {IAppStore} from "../../../../s-1-main/m-2-bll/store";
-import {PROFILE_PATH} from "../../../../s-1-main/m-1-ui/Routing";
+import {PROFILE_PATH, REGISTER_PATH} from "../../../../s-1-main/m-1-ui/Routing";
 import {setProfile} from "../../../f-3-profile/p-2-bll/b-2-redux/profileReducer";
 import {setIsLoggedIn} from "../../../../s-1-main/m-2-bll/appReducer";
 
@@ -77,6 +77,14 @@ const SignIn: React.FC<ISignInProps> = ({}) => {
                 >
                     sign in
                 </Button>
+                <Button type={"submit"}
+                        onClick={()=>navigate(REGISTER_PATH)}
+                        variant="contained"
+                        color={"success"}
+
+                >
+                    sign up
+                </Button>
                 {/*{*/}
                 {/*    loading ? <div>loading...</div> : error ? <div>{error}</div> : ""*/}
                 {/*}*/}
@@ -102,7 +110,7 @@ export const SignInStyled = styled.div`
     flex-direction: column;
     min-width: 413px;
     height: 600px;
-    gap: 40px;
+    gap: 20px;
 
     input {
       padding: 10px;

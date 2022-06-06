@@ -1,6 +1,7 @@
 import {instance} from "../../base-url"
 
 interface IMeResponseData {
+    avatar: string
     created: string
     email: string
     isAdmin: boolean
