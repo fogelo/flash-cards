@@ -20,6 +20,7 @@ interface IRegisterProps {
 const Register: React.FC<IRegisterProps> = ({}) => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const [password2, setPassword2] = useState("")
 
     const dispatch = useDispatch()
     const {loading, success, error} = useSelector<IAppStore, IRegisterState>(state => state.register)
@@ -27,32 +28,43 @@ const Register: React.FC<IRegisterProps> = ({}) => {
 
     const buttonOnClickHandler = (e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
-        dispatch(setLoadingRegister(true))
-        RegisterAPI.register(email, password)
-            .then((res) => {
-                dispatch(setSuccessRegister(true))
-                dispatch(setLoadingRegister(false))
-                navigate(SIGN_IN_PATH)
-            })
-            .catch((error) => {
-                dispatch(setLoadingRegister(false))
-                dispatch(setErrorRegister(error.response.data.error))
-            })
+        if (password === password2 && password !== "") {
+            dispatch(setLoadingRegister(true))
+            RegisterAPI.register(email, password)
+                .then((res) => {
+                    dispatch(setSuccessRegister(true))
+                    dispatch(setLoadingRegister(false))
+                    navigate(SIGN_IN_PATH)
+                })
+                .catch((error) => {
+                    dispatch(setLoadingRegister(false))
+                    dispatch(setErrorRegister(error.response.data.error))
+                })
+        }
     }
 
     return (
         <SignInStyled>
+            <h3>Sign Up</h3>
             <form name={"register"}>
                 <TextField type="text"
                            name={"email"}
-                           placeholder={"enter your email"}
+                           label={"email"}
+                           value={email}
                            variant="standard"
                            onChange={(e) => setEmail(e.currentTarget.value)}/>
                 <TextField type="text"
                            name={"password"}
-                           placeholder={"enter your password"}
+                           label={"password"}
+                           value={password}
                            variant="standard"
                            onChange={(e) => setPassword(e.currentTarget.value)}/>
+                <TextField type="text"
+                           name={"password2"}
+                           label={"confirm password"}
+                           value={password2}
+                           variant="standard"
+                           onChange={(e) => setPassword2(e.currentTarget.value)}/>
                 <Button type={"submit"}
                         onClick={buttonOnClickHandler}
                         variant={"contained"}

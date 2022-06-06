@@ -33,6 +33,7 @@ const Forgot: React.FC<IForgotProps> = (
     }
     return (
         <SignInStyled>
+            <h3>Forgot your password?</h3>
             <form name={"login"}>
                 <TextField type="text"
                            name={"email"}
@@ -41,6 +42,7 @@ const Forgot: React.FC<IForgotProps> = (
                            variant="standard"
                            onChange={(e) => setEmail(e.currentTarget.value)}
                 />
+                <p>Enter your email address and we will send you further instructions</p>
                 <Button type={"submit"}
                         onClick={buttonOnClickHandler}
                         variant="contained"
@@ -48,6 +50,10 @@ const Forgot: React.FC<IForgotProps> = (
                     send instructions
                 </Button>
             </form>
+            <p>Did you remember your password?</p>
+            <Button onClick={() => navigate(SIGN_IN_PATH)}>
+                Try logging in
+            </Button>
         </SignInStyled>
     );
 };
@@ -56,6 +62,8 @@ export const SignInStyled = styled.div`
   background-color: white;
   padding: 20px;
   display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
   position: absolute;
   top: 50%;
@@ -68,7 +76,7 @@ export const SignInStyled = styled.div`
     justify-content: center;
     flex-direction: column;
     min-width: 413px;
-    height: 600px;
+    min-height: 400px;
     gap: 20px;
 
     input {

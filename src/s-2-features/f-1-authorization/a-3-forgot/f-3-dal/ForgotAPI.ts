@@ -6,7 +6,7 @@ export interface IForgotData {
 
 export const ForgotAPI = {
     forgot(email: string) {
-        return instance.post<IForgotData>("auth/forgot", {
+        return instance.post("auth/forgot", {
             email: email, // кому восстанавливать пароль
             from: "test-front-admin <ai73a@yandex.by>",
             // можно указать разработчика фронта)
@@ -18,5 +18,8 @@ link</a>
     </div>
 ` // хтмп-письмо, вместо $token$ бэк вставит токен
         })
+    },
+    setNewPass(password: string, resetPasswordToken: string) {
+        return instance.post("auth/set-new-password", {password, resetPasswordToken})
     }
 };

@@ -3,12 +3,12 @@ import {useNavigate} from "react-router-dom";
 
 import {SignInAPI} from "../s-3-dal/SignInAPI";
 import styled from "styled-components";
-import {Button, Checkbox, FormControlLabel, TextField} from "@mui/material";
+import {Button, Checkbox, FormControlLabel, LinearProgress, TextField} from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
 import {IAppStore} from "../../../../s-1-main/m-2-bll/store";
-import {PROFILE_PATH, REGISTER_PATH} from "../../../../s-1-main/m-1-ui/Routing";
+import {FORGOT_PATH, PROFILE_PATH, REGISTER_PATH} from "../../../../s-1-main/m-1-ui/Routing";
 import {setProfile} from "../../../f-3-profile/p-2-bll/b-2-redux/profileReducer";
-import {setIsLoggedIn} from "../../../../s-1-main/m-2-bll/appReducer";
+import {setIsLoading, setIsLoggedIn} from "../../../../s-1-main/m-2-bll/appReducer";
 
 interface ISignInProps {
 
@@ -19,12 +19,14 @@ const SignIn: React.FC<ISignInProps> = ({}) => {
     const [password, setPassword] = useState("12345678")
     const [rememberMe, setRememberMe] = useState<boolean>(false)
     const isLoggedIn = useSelector<IAppStore, boolean>(state => state.app.isLoggedIn)
+    const isLoading = useSelector<IAppStore, boolean>(state => state.app.isLoading)
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
 
     const buttonOnClickHandler = (e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
+        dispatch(setIsLoading(true))
         SignInAPI.login(email, password, rememberMe)
             .then((res) => {
                 dispatch(setIsLoggedIn(true))
@@ -33,63 +35,72 @@ const SignIn: React.FC<ISignInProps> = ({}) => {
                     name: res.data.name,
                     avatar: res.data.avatar
                 }))
-                navigate(PROFILE_PATH)
+                dispatch(setIsLoading(false))
             })
             .catch((error) => {
+                dispatch(setIsLoading(false))
             })
     }
     useEffect(() => {
         if (isLoggedIn) {
-            navigate("/profile")
+            navigate(PROFILE_PATH)
         }
-    }, [])
+    }, [isLoggedIn])
 
     return (
-        <SignInStyled>
-            <form name={"login"}>
-                <TextField type="text"
-                           name={"email"}
-                           placeholder={"enter your email"}
-                           value={email}
-                           variant="standard"
-                           onChange={(e) => setEmail(e.currentTarget.value)}
-                />
-                <TextField type="text"
-                           name={"password"}
-                           placeholder={"enter your password"}
-                           value={password}
-                           variant="standard"
-                           onChange={(e) => setPassword(e.currentTarget.value)}
-                />
-                <FormControlLabel control={
-                    <Checkbox name={"rememberMe"}
-                              checked={rememberMe}
-                              onChange={(e) => {
-                                  setRememberMe(e.currentTarget.checked)
-                              }}/>}
-                                  label="remember me"
-                                  sx={{width: "200px"}}
-
-                />
+        <>
+            {
+                isLoading
+                    ? <LinearProgress color="secondary"/>
+                    : ""
+            }
+            <SignInStyled>
+                <h3>Sign In</h3>
+                <form name={"login"}>
+                    <TextField type="text"
+                               name={"email"}
+                               label={"enter your email"}
+                               value={email}
+                               variant="standard"
+                               onChange={(e) => setEmail(e.currentTarget.value)}
+                    />
+                    <TextField type="text"
+                               name={"password"}
+                               label={"enter your password"}
+                               value={password}
+                               variant="standard"
+                               onChange={(e) => setPassword(e.currentTarget.value)}
+                    />
+                    <FormControlLabel control={
+                        <Checkbox name={"rememberMe"}
+                                  checked={rememberMe}
+                                  onChange={(e) => {
+                                      setRememberMe(e.currentTarget.checked)
+                                  }}/>}
+                                      label="remember me"
+                                      sx={{width: "200px"}}
+                    />
+                    <Button type={"submit"}
+                            onClick={buttonOnClickHandler}
+                            variant="contained"
+                    >
+                        sign in
+                    </Button>
+                </form>
                 <Button type={"submit"}
-                        onClick={buttonOnClickHandler}
-                        variant="contained"
-                >
-                    sign in
-                </Button>
-                <Button type={"submit"}
-                        onClick={()=>navigate(REGISTER_PATH)}
+                        onClick={() => navigate(REGISTER_PATH)}
                         variant="contained"
                         color={"success"}
-
+                        fullWidth
                 >
                     sign up
                 </Button>
-                {/*{*/}
-                {/*    loading ? <div>loading...</div> : error ? <div>{error}</div> : ""*/}
-                {/*}*/}
-            </form>
-        </SignInStyled>
+                <Button onClick={() => navigate(FORGOT_PATH)}>
+                    Forget Password
+                </Button>
+            </SignInStyled>
+        </>
+
     );
 };
 
@@ -97,6 +108,8 @@ export const SignInStyled = styled.div`
   background-color: white;
   padding: 20px;
   display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
   position: absolute;
   top: 50%;
@@ -109,7 +122,7 @@ export const SignInStyled = styled.div`
     justify-content: center;
     flex-direction: column;
     min-width: 413px;
-    height: 600px;
+    min-height: 400px;
     gap: 20px;
 
     input {
