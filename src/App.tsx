@@ -15,13 +15,13 @@ const App: React.FC = () => {
     useEffect(() => {
         appAPI.me()
             .then((res) => {
-                dispatch(setAppInitialized(true))
                 dispatch(setIsLoggedIn(true))
                 dispatch(setProfile({
                     email: res.data.email,
                     name: res.data.name,
                     avatar: res.data.avatar
                 }))
+                dispatch(setAppInitialized(true))
             })
             .catch(error => {
                 dispatch(setAppError(error.response.data.error))

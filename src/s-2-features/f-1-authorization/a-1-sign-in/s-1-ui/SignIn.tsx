@@ -3,7 +3,7 @@ import {useNavigate} from "react-router-dom";
 
 import {SignInAPI} from "../s-3-dal/SignInAPI";
 import styled from "styled-components";
-import {Button, Checkbox, FormControlLabel, LinearProgress, TextField} from "@mui/material";
+import {Alert, Button, Checkbox, FormControlLabel, LinearProgress, Snackbar, TextField} from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
 import {IAppStore} from "../../../../s-1-main/m-2-bll/store";
 import {FORGOT_PATH, PROFILE_PATH, REGISTER_PATH} from "../../../../s-1-main/m-1-ui/Routing";
@@ -18,8 +18,11 @@ const SignIn: React.FC<ISignInProps> = ({}) => {
     const [email, setEmail] = useState("fogelo@yandex.ru")
     const [password, setPassword] = useState("12345678")
     const [rememberMe, setRememberMe] = useState<boolean>(false)
+    const [error, setError] = useState(false)
+
     const isLoggedIn = useSelector<IAppStore, boolean>(state => state.app.isLoggedIn)
     const isLoading = useSelector<IAppStore, boolean>(state => state.app.isLoading)
+
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
@@ -38,6 +41,7 @@ const SignIn: React.FC<ISignInProps> = ({}) => {
                 dispatch(setIsLoading(false))
             })
             .catch((error) => {
+                setError(true)
                 dispatch(setIsLoading(false))
             })
     }
@@ -59,14 +63,14 @@ const SignIn: React.FC<ISignInProps> = ({}) => {
                 <form name={"login"}>
                     <TextField type="text"
                                name={"email"}
-                               label={"enter your email"}
+                               label={"email"}
                                value={email}
                                variant="standard"
                                onChange={(e) => setEmail(e.currentTarget.value)}
                     />
                     <TextField type="text"
                                name={"password"}
-                               label={"enter your password"}
+                               label={"password"}
                                value={password}
                                variant="standard"
                                onChange={(e) => setPassword(e.currentTarget.value)}
@@ -99,6 +103,11 @@ const SignIn: React.FC<ISignInProps> = ({}) => {
                     Forget Password
                 </Button>
             </SignInStyled>
+            <Snackbar open={error} autoHideDuration={6000} onClose={() => setError(false)}>
+                <Alert severity="error" sx={{width: "100%"}}>
+                    Not correct password or email /ᐠ-ꞈ-ᐟ\\"
+                </Alert>
+            </Snackbar>
         </>
 
     );

@@ -19,13 +19,11 @@ export const RECOVER_PASSWORD_PATH = "/recover-password";
 export const NEW_PASSWORD_PATH = "/set-new-password/:token";
 export const SUPER_COMPONENTS_PATH = "/super-components";
 
-
-
 const Routing: React.FC = () => {
     return (
         <>
             <Routes>
-                <Route path={"/"} element={<SignIn/>}/>
+                <Route path={"/"} element={<Profile/>}/>
                 <Route path={SIGN_IN_PATH} element={<SignIn/>}/>
                 <Route path={REGISTER_PATH} element={<Register/>}/>
                 <Route path={FORGOT_PATH} element={<Forgot/>}/>
@@ -35,7 +33,6 @@ const Routing: React.FC = () => {
                 <Route path={NEW_PASSWORD_PATH} element={<NewPassword/>}/>
                 <Route path={SUPER_COMPONENTS_PATH} element={<SuperComponentsPage/>}/>
             </Routes>
-
         </>
     );
 };
