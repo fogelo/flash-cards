@@ -20,7 +20,6 @@ const NewPassword: React.FC<INewPasswordProps> = () => {
             .then(res => {
                 navigate(SIGN_IN_PATH)
             })
-
     }
     return (
         <SignInStyled>

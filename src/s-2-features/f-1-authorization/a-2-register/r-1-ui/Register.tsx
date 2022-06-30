@@ -5,7 +5,7 @@ import {IAppStore} from "../../../../s-1-main/m-2-bll/store";
 import {useNavigate} from "react-router-dom";
 import {SIGN_IN_PATH} from "../../../../s-1-main/m-1-ui/Routing";
 import {SignInStyled} from "../../a-1-sign-in/s-1-ui/SignIn";
-import {Button, TextField} from "@mui/material";
+import {Alert, Button, Snackbar, TextField} from "@mui/material";
 import {
     IRegisterState,
     setErrorRegister,
@@ -44,38 +44,42 @@ const Register: React.FC<IRegisterProps> = ({}) => {
     }
 
     return (
-        <SignInStyled>
-            <h3>Sign Up</h3>
-            <form name={"register"}>
-                <TextField type="text"
-                           name={"email"}
-                           label={"email"}
-                           value={email}
-                           variant="standard"
-                           onChange={(e) => setEmail(e.currentTarget.value)}/>
-                <TextField type="text"
-                           name={"password"}
-                           label={"password"}
-                           value={password}
-                           variant="standard"
-                           onChange={(e) => setPassword(e.currentTarget.value)}/>
-                <TextField type="text"
-                           name={"password2"}
-                           label={"confirm password"}
-                           value={password2}
-                           variant="standard"
-                           onChange={(e) => setPassword2(e.currentTarget.value)}/>
-                <Button type={"submit"}
-                        onClick={buttonOnClickHandler}
-                        variant={"contained"}
-                >
-                    sign up
-                </Button>
-                {
-                    loading ? <div>loading...</div> : error ? <div>{error}</div> : ""
-                }
-            </form>
-        </SignInStyled>
+        <>
+            <SignInStyled>
+                <h3>Sign Up</h3>
+                <form name={"register"}>
+                    <TextField type="text"
+                               name={"email"}
+                               label={"email"}
+                               value={email}
+                               variant="standard"
+                               onChange={(e) => setEmail(e.currentTarget.value)}/>
+                    <TextField type="text"
+                               name={"password"}
+                               label={"password"}
+                               value={password}
+                               variant="standard"
+                               onChange={(e) => setPassword(e.currentTarget.value)}/>
+                    <TextField type="text"
+                               name={"password2"}
+                               label={"confirm password"}
+                               value={password2}
+                               variant="standard"
+                               onChange={(e) => setPassword2(e.currentTarget.value)}/>
+                    <Button type={"submit"}
+                            onClick={buttonOnClickHandler}
+                            variant={"contained"}
+                    >
+                        sign up
+                    </Button>
+                </form>
+            </SignInStyled>
+            <Snackbar open={!!error} autoHideDuration={6000} onClose={() => dispatch(setErrorRegister(""))}>
+                <Alert severity="error" sx={{width: "100%"}}>
+                    {error}
+                </Alert>
+            </Snackbar>
+        </>
     );
 };
 

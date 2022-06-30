@@ -8,6 +8,7 @@ import {error404Reducer} from "../../s-2-features/f-4-error404/p-2-bll/b-2-redux
 import {recoverPasswordReducer} from "../../s-2-features/f-5-recover-password/p-2-bll/b-2-redux/recoverPasswordReducer";
 import {newPasswordReducer} from "../../s-2-features/f-6-new-password/p-2-bll/b-2-redux/newPasswordReducer";
 import {appReducer} from "./appReducer";
+import {packsReducer} from "../../s-2-features/f-8-packs/p-2-bll/b-2-redux/packsReducer";
 
 const reducers = combineReducers({
     signIn: signInReducer,
@@ -17,7 +18,8 @@ const reducers = combineReducers({
     error404: error404Reducer,
     recoverPassword: recoverPasswordReducer,
     newPassword: newPasswordReducer,
-    app: appReducer
+    app: appReducer,
+    packs: packsReducer
 });
 
 const store = createStore(reducers, applyMiddleware(thunkMiddleware));

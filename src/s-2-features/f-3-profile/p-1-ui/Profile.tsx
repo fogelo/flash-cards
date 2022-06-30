@@ -96,10 +96,13 @@ const Profile: React.FC<IProfileProps> = () => {
 };
 
 const ProfileStyled = styled.div`
+  //overflow: hidden;
+  height: 100%;
+  background: linear-gradient(180deg, #E6D4DE 0%, #9890C7 100%);
   .left-content-wrapper {
-    padding: 10px;
     background: #D9D9F1;
     width: 243px;
+    height: 100%;
 
     .left-content {
       display: flex;
@@ -109,7 +112,6 @@ const ProfileStyled = styled.div`
       align-items: center;
     }
   }
-
 `
 
 export default Profile;

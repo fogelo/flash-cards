@@ -8,9 +8,11 @@ import Profile from "../../s-2-features/f-3-profile/p-1-ui/Profile";
 import Forgot from "../../s-2-features/f-1-authorization/a-3-forgot/f-1-ui/Forgot";
 import RecoverPassword from "../../s-2-features/f-5-recover-password/p-1-ui/RecoverPassword";
 import NewPassword from "../../s-2-features/f-6-new-password/p-1-ui/NewPassword";
+import Packs from "../../s-2-features/f-8-packs/p-1-ui/Packs";
 
 // all project paths
 export const SIGN_IN_PATH = "/sign-in";
+
 export const REGISTER_PATH = "/register";
 export const FORGOT_PATH = "/forgot";
 export const PROFILE_PATH = "/profile";
@@ -18,6 +20,7 @@ export const ERROR404_PATH = "/error404";
 export const RECOVER_PASSWORD_PATH = "/recover-password";
 export const NEW_PASSWORD_PATH = "/set-new-password/:token";
 export const SUPER_COMPONENTS_PATH = "/super-components";
+export const PACKS_PATH = "/packs";
 
 const Routing: React.FC = () => {
     return (
@@ -32,6 +35,7 @@ const Routing: React.FC = () => {
                 <Route path={ERROR404_PATH} element={<Error404Page/>}/>
                 <Route path={NEW_PASSWORD_PATH} element={<NewPassword/>}/>
                 <Route path={SUPER_COMPONENTS_PATH} element={<SuperComponentsPage/>}/>
+                <Route path={PACKS_PATH} element={<Packs/>}/>
             </Routes>
         </>
     );

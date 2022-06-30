@@ -1,11 +1,8 @@
 import React, {MouseEvent, useState} from "react";
 import {NavLink, useNavigate} from "react-router-dom";
-import {PROFILE_PATH, RECOVER_PASSWORD_PATH, REGISTER_PATH, SIGN_IN_PATH} from "../../../../s-1-main/m-1-ui/Routing";
-import {Button, Checkbox, FormControlLabel, TextField} from "@mui/material";
+import {PROFILE_PATH, RECOVER_PASSWORD_PATH, SIGN_IN_PATH} from "../../../../s-1-main/m-1-ui/Routing";
+import {Alert, Button, Checkbox, FormControlLabel, Snackbar, TextField} from "@mui/material";
 import styled from "styled-components";
-import {SignInAPI} from "../../a-1-sign-in/s-3-dal/SignInAPI";
-import {setIsLoggedIn} from "../../../../s-1-main/m-2-bll/appReducer";
-import {setProfile} from "../../../f-3-profile/p-2-bll/b-2-redux/profileReducer";
 import {ForgotAPI} from "../f-3-dal/ForgotAPI";
 import {useDispatch} from "react-redux";
 import {setRecoveryEmail} from "../f-2-bll/b-2-redux/forgotReducer";
@@ -18,6 +15,7 @@ const Forgot: React.FC<IForgotProps> = (
     {}
 ) => {
     const [email, setEmail] = useState("")
+    const [error, setError] = useState(false)
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -29,32 +27,42 @@ const Forgot: React.FC<IForgotProps> = (
                 dispatch(setRecoveryEmail(email))
                 navigate(RECOVER_PASSWORD_PATH)
             })
+            .catch(error => {
+                setError(true)
+            })
 
     }
     return (
-        <SignInStyled>
-            <h3>Forgot your password?</h3>
-            <form name={"login"}>
-                <TextField type="text"
-                           name={"email"}
-                           placeholder={"enter your email"}
-                           value={email}
-                           variant="standard"
-                           onChange={(e) => setEmail(e.currentTarget.value)}
-                />
-                <p>Enter your email address and we will send you further instructions</p>
-                <Button type={"submit"}
-                        onClick={buttonOnClickHandler}
-                        variant="contained"
-                >
-                    send instructions
+        <>
+            <SignInStyled>
+                <h3>Forgot your password?</h3>
+                <form name={"login"}>
+                    <TextField type="text"
+                               name={"email"}
+                               placeholder={"enter your email"}
+                               value={email}
+                               variant="standard"
+                               onChange={(e) => setEmail(e.currentTarget.value)}
+                    />
+                    <p>Enter your email address and we will send you further instructions</p>
+                    <Button type={"submit"}
+                            onClick={buttonOnClickHandler}
+                            variant="contained"
+                    >
+                        send instructions
+                    </Button>
+                </form>
+                <p>Did you remember your password?</p>
+                <Button onClick={() => navigate(SIGN_IN_PATH)}>
+                    Try logging in
                 </Button>
-            </form>
-            <p>Did you remember your password?</p>
-            <Button onClick={() => navigate(SIGN_IN_PATH)}>
-                Try logging in
-            </Button>
-        </SignInStyled>
+            </SignInStyled>
+            <Snackbar open={error} autoHideDuration={6000} onClose={() => setError(false)}>
+                <Alert severity="error" sx={{width: "100%"}}>
+                    Not correct email /ᐠ-ꞈ-ᐟ\\"
+                </Alert>
+            </Snackbar>
+        </>
     );
 };
 
