@@ -21,7 +21,7 @@ export const RECOVER_PASSWORD_PATH = "/recover-password";
 export const NEW_PASSWORD_PATH = "/set-new-password/:token";
 export const SUPER_COMPONENTS_PATH = "/super-components";
 export const PACKS_PATH = "/packs";
-
+//remove this comment
 const Routing: React.FC = () => {
     return (
         <>
